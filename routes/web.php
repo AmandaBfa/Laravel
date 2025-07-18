@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,3 +10,6 @@ Route::get('/', function () {
 Route::get('/about', function () {
     echo "About us!!!";
 });
+
+// rota vai para o controllador main com a funcao index
+Route::get('/main', [MainController::class, 'index']);
