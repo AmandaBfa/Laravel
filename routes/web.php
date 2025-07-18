@@ -12,4 +12,4 @@ Route::get('/about', function () {
 });
 
 // rota vai para o controllador main com a funcao index
-Route::get('/main', [MainController::class, 'index']);
+Route::get('/main/{value}', [MainController::class, 'index']);

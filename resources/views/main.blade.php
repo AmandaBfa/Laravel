@@ -10,6 +10,8 @@
 <body>
 
     <h1>Welcome View e Blade!</h1>
+    <hr>
+    <h3>The value is: {{ $value }}</h3>
 
 </body>
 
