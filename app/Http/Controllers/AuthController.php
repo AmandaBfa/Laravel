@@ -38,24 +38,39 @@ class AuthController extends Controller
         $username = $request->input('text_username');
         $password = $request->input('text_password');
 
-        // test database connection
-        /* try {
-                    DB::connection()->getPdo();
-                    echo 'Connection is ok!';
-                } catch (\PDOException $e) {
-                    echo "Connection failed: " . $e->getMessage();
-                }
-                echo "<br> FIM!"; */
+        // check if user exists
+        $user = User::where('username', $username)
+            ->where('deleted_at', NULL)
+            ->first();
 
-        // get all the useres from the database
-        // $users = User::all()->toArray();
+        if (!$user) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('loginError', 'Username ou password incorretos.');
+        }
 
-        //as an object instance os the model's class
-        $userModel = new User();
-        $users = $userModel->all()->toArray();
+        // check if password is correct
+        if (!password_verify($password, $user->password)) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('loginError', 'Username ou password incorretos.');
+        }
 
-        echo '<pre>';
-        print_r($users);
+        // update last login 
+        $user->last_login = date('Y-m-d H:i:s');
+        $user->save();
+
+        // login user
+        session([
+            'user' => [
+                'id' => $user->id,
+                'username' => $user->username
+            ]
+        ]);
+
+        echo 'LOGIN COM SUCESSO!';
     }
 
     public function logout()
