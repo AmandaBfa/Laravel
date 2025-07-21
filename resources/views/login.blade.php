@@ -14,14 +14,18 @@
                 <div class="row justify-content-center">
                     <div class="col-md-10 col-12">
                         <form action="/loginSubmit" method="post">
-                            @csrf
+                            @csrf <!-- proteger seu formulário contra ataques CSRF (Cross-Site Request Forgery) -->
                             <div class="mb-3">
                                 <label for="text_username" class="form-label">Username</label>
-                                <input type="text" class="form-control bg-dark text-info" name="text_username" required>
+                                <input type="text" class="form-control bg-dark text-info" name="text_username">
+                                <!-- show error -->
+                                @error('text_username')
+                                <div class="text-danger">{{ $mensagem }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="text_password" class="form-label">Password</label>
-                                <input type="password" class="form-control bg-dark text-info" name="text_password" required>
+                                <input type="password" class="form-control bg-dark text-info" name="text_password">
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-secondary w-100">LOGIN</button>
@@ -34,6 +38,18 @@
                 <div class="text-center text-secondary mt-3">
                     <small>&copy; <?= date('Y') ?> Notes</small>
                 </div>
+
+                <!-- errors (error é o nome padrão do laravel para acessar mensagens de erros de validação no blade) -->
+                <!-- esse padrão vai servir para mostrar em baixo do formulario, mas existe outras maneiras tambem -->
+                <!-- @if($errors->any())
+                <div class="alert alert-danger mt-3">
+                    <ul class='m-0'>
+                        @foreach($errors->all() as $erro)
+                        <li>{{ $erro }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif -->
 
             </div>
         </div>
