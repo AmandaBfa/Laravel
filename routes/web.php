@@ -10,12 +10,15 @@ Route::get('/login', [AuthController::class, 'login']);
 Route::post('/loginSubmit', [AuthController::class, 'loginSubmit']);
 
 Route::middleware([CheckIsLogged::class])->group(function () {
+    // get: Envia dados pela URL
+    // post: Envia dados no corpo da requisição (body)
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::get('/newNote', [MainController::class, 'newNote'])->name('new');
     Route::post('/newNoteSubmit', [MainController::class, 'newNoteSubmit'])->name('newNoteSubmit');
 
     // edit note
     Route::get('/editNote/{id}', [MainController::class, 'editNote'])->name('edit');
+    Route::post('/editNoteSubmit/{id}', [MainController::class, 'editNoteSubmit'])->name('editNoteSubmit');
 
     // delete note
     Route::get('/deleteNote/{id}', [MainController::class, 'deleteNote'])->name('delete');
