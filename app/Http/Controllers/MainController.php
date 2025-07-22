@@ -23,33 +23,24 @@ class MainController extends Controller
 
     public function newNote()
     {
-        echo "I'm creating a new note";
+        //show new note view
+        return view('new_note');
+    }
+
+    public function newNoteSubmit(Request $request)
+    {
+        echo "I'm creating a new note.";
     }
 
     public function editNote($id)
     {
-        // $id = $this->decryptId($id);
         $id = Operations::decryptId($id);
         echo "I'm editing note with id = $id.";
     }
 
     public function deleteNote($id)
     {
-        // $id = $this->decryptId($id); 
         $id = Operations::decryptId($id);
         echo "I'm deleting note with id = $id.";
     }
-
-    //deixa de ser necessario esse metodo privado
-    /* private function decryptId($id)
-    {
-        // check if $id id encrypt
-        try {
-            $id = Crypt::decrypt($id);
-        } catch (DecryptException $e) {
-            return redirect()->route('home');
-        }
-
-        return $id;
-    } */
 }
