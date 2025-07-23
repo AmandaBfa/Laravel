@@ -138,12 +138,18 @@ class MainController extends Controller
         // load note 
         $note = Note::find($id);
 
-        // 1. hard delete
+        // 1. hard delete (Exclusão definitiva)
         // $note->delete();
 
-        // 2. soft delete
-        $note->deleted_at = date('Y-m-d H:i:s');
-        $note->save();
+        // 2. soft delete (exclusão lógica feita "na mão")
+        // $note->deleted_at = date('Y-m-d H:i:s');
+        // $note->save();
+
+        // 3. soft delete (property SoftDeletes in model) (Preenche deleted_at, Laravel ignora nas queries automaticamente.)
+        $note->delete();
+
+        // 4. hard delete (property SoftDeletes in model) (Apaga do banco mesmo com SoftDeletes ativado.)
+        // $note->forceDelete();
 
         // redirect to home 
         return redirect()->route('home');
